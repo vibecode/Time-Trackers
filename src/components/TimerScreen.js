@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Card, Button, Header, Icon } from 'semantic-ui-react';
+import { renderElapsedTime } from '../helpers';
 
 class TimerScreen extends Component {
   render() {
-    const elapsedString = ''; // TODO helpers.renderElapsedString(this.props.elapsed);
+    const elapsedTime = renderElapsedTime(this.props.elapsed);
 
     return (
         <Card centered>
@@ -18,7 +19,7 @@ class TimerScreen extends Component {
 
             <div className='center aligned description'>
               <h2>
-                {elapsedString}
+                {elapsedTime}
               </h2>
             </div>
 

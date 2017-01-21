@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Grid, GridRow } from 'semantic-ui-react';
+import { Grid, GridColumn } from 'semantic-ui-react';
 import TimerList from './TimerList';
-import TimerForm from './TimerForm';
+import AddTimerForm from './AddTimerForm';
 
 class Dashboard extends Component {
   render() {
     return (
       <Grid columns={3} centered>
-        <GridRow>
+        <GridColumn>
           <TimerList />
-           <TimerForm isOpen={true} />
-        </GridRow>
+          <AddTimerForm isOpen={false} />
+        </GridColumn>
       </Grid>
     );
   }
