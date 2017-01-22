@@ -1,26 +1,22 @@
 import React, { Component } from 'react';
 import Timer from './Timer';
-import AddTimerForm from './AddTimerForm';
 
 class TimerList extends Component {
   render() {
-    return (
-        <div id='timers'>
-          <Timer
-              title='Goodbuy World'
-              project='Dr. Manchetten'
-              elapsed='8986300'
-              runningSince={null}
-              editFormOpen={false}
-          />
+    const timers = this.props.timers.map((timer) => (
+        <Timer
+            key={timer.id}
+            id={timer.id}
+            title={timer.title}
+            project={timer.project}
+            elapsed={timer.elapsed}
+            runningSince={timer.runningSince}
+        />
+    ));
 
-          <Timer
-              title='Learn extreme ironing'
-              project='World Domination'
-              elapsed='3890985'
-              runningSince={null}
-              editFormOpen={true}
-          />
+    return (
+        <div id='timers' className="container">
+          {timers}
         </div>
     );
   }

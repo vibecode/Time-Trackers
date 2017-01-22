@@ -3,10 +3,18 @@ import TimerScreen from './TimerScreen';
 import TimerForm from './TimerForm';
 
 class Timer extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      editFormOpen: false
+    }
+  }
+
   render() {
     if (this.props.editFormOpen) {
       return (
           <TimerForm
+              id={this.props.id}
               title={this.props.title}
               project={this.props.project}
           />
@@ -14,6 +22,7 @@ class Timer extends Component {
     } else {
       return (
         <TimerScreen
+            id={this.props.id}
             title={this.props.title}
             project={this.props.project}
             elapsed={this.props.elapsed}

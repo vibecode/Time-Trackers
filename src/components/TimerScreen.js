@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, Header, Icon } from 'semantic-ui-react';
+import { Card, Button, Header, Icon, Statistic, StatisticValue } from 'semantic-ui-react';
 import { renderElapsedTime } from '../helpers';
 
 class TimerScreen extends Component {
@@ -8,27 +8,27 @@ class TimerScreen extends Component {
 
     return (
         <Card centered>
-          <div className='content'>
+          <div className='center aligned content'>
             <Header>
               {this.props.title}
             </Header>
 
-            <div className='meta'>
-              {this.props.object}
+            <div className='center aligned meta'>
+              {this.props.project}
             </div>
 
-            <div className='center aligned description'>
-              <h2>
+            <Statistic color='violet'>
+              <StatisticValue>
                 {elapsedTime}
-              </h2>
-            </div>
+              </StatisticValue>
+            </Statistic>
 
             <div className='extra content'>
               <Icon name={'trash'} />
               <Icon name={'edit'} />
             </div>
 
-            <Button basic color={'blue'} attached={'bottom'}>
+            <Button basic color={'violet'} attached={'bottom'}>
               Start
             </Button>
           </div>
