@@ -16,18 +16,12 @@ class Dashboard extends Component {
           id: uuid.v4(),
           elapsed: 5456099,
           runningSince: Date.now(),
-        },
-        {
-          title: 'Bake squash',
-          project: 'Kitchen Chores',
-          id: uuid.v4(),
-          elapsed: 1273998,
-          runningSince: null,
         }
       ]
     };
 
     this.handleCreateFormSubmit = this.handleCreateFormSubmit.bind(this);
+    this.handleEditFormSubmit = this.handleEditFormSubmit.bind(this);
   }
 
   handleCreateFormSubmit(timer) {
@@ -42,11 +36,33 @@ class Dashboard extends Component {
     });
   }
 
+  handleEditFormSubmit(attrs) {
+    this.updateTimer(attrs);
+  }
+
+  updateTimer(attrs) {
+    this.setState({
+      timers: this.state.timers.map((timer) => {
+        if (timer.id === attrs.id) {
+          return Object.assign({}, timer, {
+            title: attrs.title,
+            project: attrs.project,
+          });
+        } else {
+          return timer;
+        }
+      }),
+    });
+  }
+
   render() {
     return (
         <Grid columns={3} centered padded={true}>
           <GridColumn>
-            <TimerList timers={this.state.timers} />
+            <TimerList
+                timers={this.state.timers}
+                onFormSubmit={this.handleEditFormSubmit}
+            />
             <AddTimerForm onFormSubmit={this.handleCreateFormSubmit} />
           </GridColumn>
         </Grid>

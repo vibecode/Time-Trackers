@@ -9,6 +9,11 @@ class TimerScreen extends Component {
     return (
         <Card centered>
           <div className='center aligned content'>
+            <div className='extra content left aligned'>
+              <Icon  name='trash' />
+              <Icon  name='write' onClick={this.props.onEditClick} />
+            </div>
+
             <Header>
               {this.props.title}
             </Header>
@@ -22,11 +27,6 @@ class TimerScreen extends Component {
                 {elapsedTime}
               </StatisticValue>
             </Statistic>
-
-            <div className='extra content'>
-              <Icon name={'trash'} />
-              <Icon name={'edit'} />
-            </div>
 
             <Button basic color={'violet'} attached={'bottom'}>
               Start
