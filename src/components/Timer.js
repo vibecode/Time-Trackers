@@ -17,7 +17,8 @@ class Timer extends Component {
     this.openForm();
   }
 
-  handleFormClose() {
+  handleFormClose(e) {
+    e.preventDefault();
     this.closeForm();
   }
 
@@ -57,6 +58,7 @@ class Timer extends Component {
               project={this.props.project}
               elapsed={this.props.elapsed}
               runningSince={this.props.runningSince}
+              onTrashClick={this.props.onTrashClick}
               onEditClick={this.handleEditClick}
           />
       );

@@ -3,6 +3,15 @@ import { Card, Button, Header, Icon, Statistic, StatisticValue } from 'semantic-
 import { renderElapsedTime } from '../helpers';
 
 class TimerScreen extends Component {
+  constructor(props){
+    super(props);
+    this.handleTrashClick = this.handleTrashClick.bind(this);
+  }
+
+  handleTrashClick() {
+    this.props.onTrashClick(this.props.id);
+  }
+
   render() {
     const elapsedTime = renderElapsedTime(this.props.elapsed);
 
@@ -10,7 +19,7 @@ class TimerScreen extends Component {
         <Card centered>
           <div className='center aligned content'>
             <div className='extra content left aligned'>
-              <Icon  name='trash' />
+              <Icon  name='trash' onClick={this.handleTrashClick}/>
               <Icon  name='write' onClick={this.props.onEditClick} />
             </div>
 

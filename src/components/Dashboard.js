@@ -22,6 +22,7 @@ class Dashboard extends Component {
 
     this.handleCreateFormSubmit = this.handleCreateFormSubmit.bind(this);
     this.handleEditFormSubmit = this.handleEditFormSubmit.bind(this);
+    this.handleTrashClick = this.handleTrashClick.bind(this);
   }
 
   handleCreateFormSubmit(timer) {
@@ -55,6 +56,16 @@ class Dashboard extends Component {
     });
   }
 
+  handleTrashClick(id) {
+    this.deleteTimer(id);
+  }
+
+  deleteTimer(id) {
+    this.setState({
+      timers: this.state.timers.filter((timer) => timer.id !== id),
+    });
+  }
+
   render() {
     return (
         <Grid columns={3} centered padded={true}>
@@ -62,6 +73,7 @@ class Dashboard extends Component {
             <TimerList
                 timers={this.state.timers}
                 onFormSubmit={this.handleEditFormSubmit}
+                onTrashClick={this.handleTrashClick}
             />
             <AddTimerForm onFormSubmit={this.handleCreateFormSubmit} />
           </GridColumn>
