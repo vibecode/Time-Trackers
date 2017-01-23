@@ -19,7 +19,8 @@ class AddTimerForm extends Component {
     });
   }
 
-  handleFormClose() {
+  handleFormClose(e) {
+    e.preventDefault();
     this.setState({
       isOpen: false
     });

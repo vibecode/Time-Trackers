@@ -7,7 +7,9 @@ class TimerForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit() {
+  handleSubmit(e) {
+    e.preventDefault();
+
     this.props.onFormSubmit({
       id: this.props.id,
       title: this.refs.title.value,
@@ -36,7 +38,7 @@ class TimerForm extends Component {
                 <Button basic color={'violet'} onClick={this.handleSubmit}>
                   {submitText}
                 </Button>
-                <Button basic color={'red'} onClick={this.props.onFormClose}>
+                <Button basic color={'red'} onClick={this.props.onFormClose} >
                   Cancel
                 </Button>
               </ButtonGroup>
