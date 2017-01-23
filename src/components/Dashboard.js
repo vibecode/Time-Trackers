@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Grid, GridColumn } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import TimerList from './TimerList';
-import AddTimerForm from './AddTimerForm';
 import uuid from 'uuid';
 import { newTimer } from '../helpers';
 
@@ -15,7 +14,6 @@ class Dashboard extends Component {
           project: 'Project name',
           id: uuid.v4(),
           elapsed: 0,
-          runningSince: Date.now(),
         }
       ]
     };
@@ -112,18 +110,16 @@ class Dashboard extends Component {
 
   render() {
     return (
-        <Grid columns={3} centered padded={true}>
-          <GridColumn>
+        <Container className='content'>
             <TimerList
                 timers={this.state.timers}
                 onFormSubmit={this.handleEditFormSubmit}
                 onTrashClick={this.handleTrashClick}
                 onStartClick={this.handleStartClick}
                 onStopClick={this.handleStopClick}
+                onAddTimerFormClick={this.handleCreateFormSubmit}
             />
-            <AddTimerForm onFormSubmit={this.handleCreateFormSubmit} />
-          </GridColumn>
-        </Grid>
+        </Container>
     );
   }
 }

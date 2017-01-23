@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Card, Header, Icon, Statistic, StatisticValue } from 'semantic-ui-react';
+import {
+  Card,
+  Icon,
+  Statistic,
+  StatisticValue,
+  CardMeta,
+  CardHeader,
+  CardContent
+} from 'semantic-ui-react';
 import { renderElapsedTime } from '../helpers';
 import TimerActionButton from './TimerActionButton';
 
@@ -37,33 +45,35 @@ class TimerScreen extends Component {
     );
 
     return (
-        <Card centered>
-          <div className='center aligned content'>
-            <div className='extra content left aligned'>
-              <Icon name='trash' onClick={this.handleTrashClick} />
-              <Icon name='write' onClick={this.props.onEditClick} />
-            </div>
+        <Card raised>
+          <CardContent extra>
+            <Icon name='trash' onClick={this.handleTrashClick} />
+            <Icon name='write' onClick={this.props.onEditClick} />
+          </CardContent>
 
-            <Header size='large'>
+          <CardContent className='center aligned'>
+            <CardHeader size='large'>
               {this.props.title}
-            </Header>
+            </CardHeader>
 
-            <div className='center aligned meta'>
+            <CardMeta>
               {this.props.project}
-            </div>
+            </CardMeta>
 
-            <Statistic color='violet'>
+            <Statistic color='violet' size='small'>
               <StatisticValue>
                 {elapsedTime}
               </StatisticValue>
             </Statistic>
+          </CardContent>
 
+          <CardContent extra>
             <TimerActionButton
                 timerIsRunning={!!this.props.runningSince}
                 onStartClick={this.handleStartClick}
                 onStopClick={this.handleStopClick}
             />
-          </div>
+          </CardContent>
         </Card>
     );
   }

@@ -7,20 +7,20 @@ class TimerActionButton extends Component {
     if (this.props.timerIsRunning) {
       return (
           <Button
+              fluid
               basic
               content='Stop'
               color='violet'
-              attached='bottom'
               onClick={this.props.onStopClick}
           />
       );
     } else {
       return (
           <Button
+              fluid
               basic
               content='Start'
               color='violet'
-              attached='bottom'
               onClick={this.props.onStartClick}
           />
       );

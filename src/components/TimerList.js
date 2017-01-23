@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Timer from './Timer';
+import AddTimerForm from './AddTimerForm';
+import { CardGroup } from 'semantic-ui-react';
 
 class TimerList extends Component {
   render() {
@@ -19,9 +21,10 @@ class TimerList extends Component {
     ));
 
     return (
-        <div id='timers' className="container">
+        <CardGroup itemsPerRow={3} stackable>
           {timers}
-        </div>
+          <AddTimerForm onFormSubmit={this.props.onAddTimerFormClick}/>
+        </CardGroup>
     );
   }
 }

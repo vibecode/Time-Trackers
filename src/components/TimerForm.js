@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Form, FormField, Button, ButtonGroup } from 'semantic-ui-react';
+import { Card, CardContent, Form, FormField, Button, ButtonGroup } from 'semantic-ui-react';
 
 class TimerForm extends Component {
   constructor(props) {
@@ -21,8 +21,8 @@ class TimerForm extends Component {
     const submitText = this.props.id ? 'Update' : 'Create';
 
     return (
-        <Card centered>
-          <div className='content'>
+        <Card raised>
+          <CardContent>
             <Form>
               <FormField>
                 <label>Title</label>
@@ -33,17 +33,19 @@ class TimerForm extends Component {
                 <label>Project</label>
                 <input type='text' ref='project' defaultValue={this.props.project} />
               </FormField>
-
-              <ButtonGroup attached={'bottom'}>
-                <Button basic color={'violet'} onClick={this.handleSubmit}>
-                  {submitText}
-                </Button>
-                <Button basic color={'red'} onClick={this.props.onFormClose} >
-                  Cancel
-                </Button>
-              </ButtonGroup>
             </Form>
-          </div>
+          </CardContent>
+
+          <CardContent extra>
+            <ButtonGroup fluid>
+              <Button basic color={'violet'} onClick={this.handleSubmit}>
+                {submitText}
+              </Button>
+              <Button basic color={'red'} onClick={this.props.onFormClose}>
+                Cancel
+              </Button>
+            </ButtonGroup>
+          </CardContent>
         </Card>
     );
   }
