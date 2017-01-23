@@ -60,6 +60,8 @@ class Timer extends Component {
               runningSince={this.props.runningSince}
               onTrashClick={this.props.onTrashClick}
               onEditClick={this.handleEditClick}
+              onStartClick={this.props.onStartClick}
+              onStopClick={this.props.onStopClick}
           />
       );
     }

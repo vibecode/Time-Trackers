@@ -20,7 +20,7 @@ const millisecondsToHuman = (ms) => {
 
 export const newTimer = (attrs = {}) => {
   return {
-    title: attrs.title || 'Timer',
+    title: attrs.title || 'Title',
     project: attrs.project || 'Project',
     id: uuid.v4(),
     elapsed: 0,

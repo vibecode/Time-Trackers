@@ -11,10 +11,10 @@ class Dashboard extends Component {
     this.state = {
       timers: [
         {
-          title: 'Practice squat',
-          project: 'Gym Chores',
+          title: 'Task Title',
+          project: 'Project name',
           id: uuid.v4(),
-          elapsed: 5456099,
+          elapsed: 0,
           runningSince: Date.now(),
         }
       ]
@@ -23,6 +23,8 @@ class Dashboard extends Component {
     this.handleCreateFormSubmit = this.handleCreateFormSubmit.bind(this);
     this.handleEditFormSubmit = this.handleEditFormSubmit.bind(this);
     this.handleTrashClick = this.handleTrashClick.bind(this);
+    this.handleStartClick = this.handleStartClick.bind(this);
+    this.handleStopClick = this.handleStopClick.bind(this);
   }
 
   handleCreateFormSubmit(timer) {
@@ -66,6 +68,48 @@ class Dashboard extends Component {
     });
   }
 
+  handleStartClick(timerId) {
+    this.startTimer(timerId);
+  }
+
+  handleStopClick(timerId) {
+    this.stopTimer(timerId);
+  }
+
+  startTimer(timerId) {
+    const now = Date.now();
+
+    this.setState({
+      timers: this.state.timers.map((timer) => {
+        if (timer.id === timerId) {
+          return Object.assign({}, timer, {
+            runningSince: now,
+          });
+        } else {
+          return timer;
+        }
+      }),
+    });
+  }
+
+  stopTimer(timerId) {
+    const now = Date.now();
+
+    this.setState({
+      timers: this.state.timers.map((timer) => {
+        if (timer.id === timerId) {
+          const lastElapsed = now - timer.runningSince;
+          return Object.assign({}, timer, {
+            elapsed: timer.elapsed + lastElapsed,
+            runningSince: null,
+          });
+        } else {
+          return timer;
+        }
+      }),
+    });
+  }
+
   render() {
     return (
         <Grid columns={3} centered padded={true}>
@@ -74,6 +118,8 @@ class Dashboard extends Component {
                 timers={this.state.timers}
                 onFormSubmit={this.handleEditFormSubmit}
                 onTrashClick={this.handleTrashClick}
+                onStartClick={this.handleStartClick}
+                onStopClick={this.handleStopClick}
             />
             <AddTimerForm onFormSubmit={this.handleCreateFormSubmit} />
           </GridColumn>

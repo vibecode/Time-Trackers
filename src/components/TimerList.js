@@ -13,6 +13,8 @@ class TimerList extends Component {
             runningSince={timer.runningSince}
             onFormSubmit={this.props.onFormSubmit}
             onTrashClick={this.props.onTrashClick}
+            onStartClick={this.props.onStartClick}
+            onStopClick={this.props.onStopClick}
         />
     ));
 
