@@ -3,6 +3,7 @@ import { Container } from 'semantic-ui-react';
 import TimerList from './TimerList';
 import uuid from 'uuid';
 import { newTimer } from '../helpers';
+import * as client from '../client';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -23,6 +24,21 @@ class Dashboard extends Component {
     this.handleTrashClick = this.handleTrashClick.bind(this);
     this.handleStartClick = this.handleStartClick.bind(this);
     this.handleStopClick = this.handleStopClick.bind(this);
+    this.loadTimersFromServer = this.loadTimersFromServer.bind(this);
+  }
+
+  componentDidMount() {
+    this.loadTimersFromServer();
+    setInterval(this.loadTimersFromServer, 5000);
+  }
+
+  loadTimersFromServer() {
+    client.getTimers((serverTimers) => (
+            this.setState({
+              timers: serverTimers
+            })
+        )
+    );
   }
 
   handleCreateFormSubmit(timer) {
@@ -35,6 +51,8 @@ class Dashboard extends Component {
     this.setState({
       timers: this.state.timers.concat(t),
     });
+
+    client.createTimer(t);
   }
 
   handleEditFormSubmit(attrs) {
@@ -54,6 +72,8 @@ class Dashboard extends Component {
         }
       }),
     });
+
+    client.updateTimer(attrs);
   }
 
   handleTrashClick(id) {
@@ -64,6 +84,8 @@ class Dashboard extends Component {
     this.setState({
       timers: this.state.timers.filter((timer) => timer.id !== id),
     });
+
+    client.deleteTimer({ id });
   }
 
   handleStartClick(timerId) {
@@ -88,6 +110,7 @@ class Dashboard extends Component {
         }
       }),
     });
+    client.startTimer({ id: timerId, start: now });
   }
 
   stopTimer(timerId) {
@@ -106,19 +129,21 @@ class Dashboard extends Component {
         }
       }),
     });
+
+    client.stopTimer({ id: timerId, stop: now })
   }
 
   render() {
     return (
         <Container className='content'>
-            <TimerList
-                timers={this.state.timers}
-                onFormSubmit={this.handleEditFormSubmit}
-                onTrashClick={this.handleTrashClick}
-                onStartClick={this.handleStartClick}
-                onStopClick={this.handleStopClick}
-                onAddTimerFormClick={this.handleCreateFormSubmit}
-            />
+          <TimerList
+              timers={this.state.timers}
+              onFormSubmit={this.handleEditFormSubmit}
+              onTrashClick={this.handleTrashClick}
+              onStartClick={this.handleStartClick}
+              onStopClick={this.handleStopClick}
+              onAddTimerFormClick={this.handleCreateFormSubmit}
+          />
         </Container>
     );
   }
