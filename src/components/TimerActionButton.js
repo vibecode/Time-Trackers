@@ -8,7 +8,6 @@ class TimerActionButton extends Component {
       return (
           <Button
               fluid
-              basic
               content='Stop'
               color='violet'
               onClick={this.props.onStopClick}

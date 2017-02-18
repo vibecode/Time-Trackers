@@ -45,7 +45,7 @@ class AddTimerForm extends Component {
       return (
           <Card raised>
             <CardContent className='center aligned'>
-                <Button basic icon='plus square' onClick={this.handleFormOpen} />
+              <Button basic icon='plus square' onClick={this.handleFormOpen} />
             </CardContent>
           </Card>
       );

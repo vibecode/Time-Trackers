@@ -1,5 +1,3 @@
-import uuid from 'uuid';
-
 const pad = (numberString, size) => {
   let padded = numberString;
   while (padded.length < size) padded = `0${padded}`;
@@ -18,15 +16,6 @@ const millisecondsToHuman = (ms) => {
   ].join(':');
 };
 
-export const newTimer = (attrs = {}) => {
-  return {
-    title: attrs.title || 'Title',
-    project: attrs.project || 'Project',
-    id: uuid.v4(),
-    elapsed: 0,
-  };
-};
-
 export const renderElapsedTime = (elapsed, runningSince) => {
   let totalElapsed = elapsed;
   if (runningSince) {
@@ -34,11 +23,3 @@ export const renderElapsedTime = (elapsed, runningSince) => {
   }
   return millisecondsToHuman(totalElapsed);
 };
-
-// function findById(array, id, cb) {
-//   array.forEach((el) => {
-//     if (el.id === id) {
-//       cb(el);
-//     }
-//   });
-// }

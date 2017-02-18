@@ -42,27 +42,27 @@ class Timer extends Component {
   render() {
     if (this.state.editFormOpen) {
       return (
-            <TimerForm
-                id={this.props.id}
-                title={this.props.title}
-                project={this.props.project}
-                onFormSubmit={this.handleSubmit}
-                onFormClose={this.handleFormClose}
-            />
+          <TimerForm
+              id={this.props.id}
+              title={this.props.title}
+              project={this.props.project}
+              onFormSubmit={this.handleSubmit}
+              onFormClose={this.handleFormClose}
+          />
       );
     } else {
       return (
-            <TimerScreen
-                id={this.props.id}
-                title={this.props.title}
-                project={this.props.project}
-                elapsed={this.props.elapsed}
-                runningSince={this.props.runningSince}
-                onTrashClick={this.props.onTrashClick}
-                onEditClick={this.handleEditClick}
-                onStartClick={this.props.onStartClick}
-                onStopClick={this.props.onStopClick}
-            />
+          <TimerScreen
+              id={this.props.id}
+              title={this.props.title}
+              project={this.props.project}
+              elapsed={this.props.elapsed}
+              runningSince={this.props.runningSince}
+              onTrashClick={this.props.onTrashClick}
+              onEditClick={this.handleEditClick}
+              onStartClick={this.props.onStartClick}
+              onStopClick={this.props.onStopClick}
+          />
       );
     }
   }

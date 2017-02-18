@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react';
 import TimerList from './TimerList';
 import uuid from 'uuid';
-import { newTimer } from '../helpers';
 import * as client from '../client';
+import _ from 'lodash';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class Dashboard extends Component {
           project: 'Project name',
           id: uuid.v4(),
           elapsed: 0,
+          runningSince: null
         }
       ]
     };
@@ -29,30 +30,32 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.loadTimersFromServer();
-    setInterval(this.loadTimersFromServer, 5000);
   }
 
   loadTimersFromServer() {
-    client.getTimers((serverTimers) => (
-            this.setState({
-              timers: serverTimers
-            })
-        )
-    );
+    client.getTimers((data) => {
+      const timers = _.map(data, item => item);
+      this.setState({ timers });
+    });
   }
 
   handleCreateFormSubmit(timer) {
     this.createTimer(timer);
   }
 
-  createTimer(timer) {
-    const t = newTimer(timer);
+  createTimer(attrs = {}) {
+    const timer = {
+      title: attrs.title || 'Title',
+      project: attrs.project || 'Project',
+      id: uuid.v4(),
+      elapsed: 0,
+    };
 
     this.setState({
-      timers: this.state.timers.concat(t),
+      timers: this.state.timers.concat(timer),
     });
 
-    client.createTimer(t);
+    client.saveTimer(timer);
   }
 
   handleEditFormSubmit(attrs) {
@@ -60,13 +63,12 @@ class Dashboard extends Component {
   }
 
   updateTimer(attrs) {
+    const { id, title, project } = attrs;
+
     this.setState({
       timers: this.state.timers.map((timer) => {
-        if (timer.id === attrs.id) {
-          return Object.assign({}, timer, {
-            title: attrs.title,
-            project: attrs.project,
-          });
+        if (timer.id === id) {
+          return { ...timer, title, project }
         } else {
           return timer;
         }
@@ -84,8 +86,7 @@ class Dashboard extends Component {
     this.setState({
       timers: this.state.timers.filter((timer) => timer.id !== id),
     });
-
-    client.deleteTimer({ id });
+    client.deleteTimer(id);
   }
 
   handleStartClick(timerId) {
@@ -96,41 +97,44 @@ class Dashboard extends Component {
     this.stopTimer(timerId);
   }
 
-  startTimer(timerId) {
+  startTimer(id) {
     const now = Date.now();
 
     this.setState({
       timers: this.state.timers.map((timer) => {
-        if (timer.id === timerId) {
-          return Object.assign({}, timer, {
-            runningSince: now,
-          });
+        if (timer.id === id) {
+          return { ...timer, runningSince: now };
         } else {
           return timer;
         }
       }),
     });
-    client.startTimer({ id: timerId, start: now });
+
+    client.startTimer({ id, start: now });
   }
 
   stopTimer(timerId) {
     const now = Date.now();
+    let elapsed = 0;
+
+    this.state.timers.forEach((timer) => {
+      if (timer.id === timerId) {
+        const lastElapsed = now - timer.runningSince;
+        elapsed = timer.elapsed + lastElapsed;
+      }
+    });
 
     this.setState({
       timers: this.state.timers.map((timer) => {
         if (timer.id === timerId) {
-          const lastElapsed = now - timer.runningSince;
-          return Object.assign({}, timer, {
-            elapsed: timer.elapsed + lastElapsed,
-            runningSince: null,
-          });
+          return { ...timer, elapsed, runningSince: null };
         } else {
           return timer;
         }
       }),
     });
 
-    client.stopTimer({ id: timerId, stop: now })
+    client.stopTimer({ id: timerId, elapsed: elapsed })
   }
 
   render() {

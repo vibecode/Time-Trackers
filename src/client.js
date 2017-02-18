@@ -1,77 +1,42 @@
-const checkStatus = (response) => {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  } else {
-    throw new Error(`SHIT IS FUCKED ${response.status}: ${response.statusText}`);
-  }
+import firebase from 'firebase';
+
+export const getTimers = (getData) => {
+  const timersRef = firebase.database().ref('timers/');
+  timersRef.on('value', (snapshot) => {
+    return getData(snapshot.val());
+  });
 };
 
-export const getTimers = (success) => {
-  return fetch('http://localhost:9000/api/timers', {
-    headers: {
-      Accept: 'application/json',
-    }
-  }).then(checkStatus)
-    .then((response) => response.json())
-    .then(success)
-    .catch((error) => console.log(error));
+export const saveTimer = (data) => {
+  return firebase.database().ref(`timers/${data.id}`).set(data);
 };
 
-export const createTimer = (data) => {
-  return fetch('http://localhost:9000/api/timers', {
-    method: 'post',
-    body: JSON.stringify(data),
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-  }).then(checkStatus);
+export const updateTimer = (attr) => {
+  const { id, title, project } = attr;
+  const updates = {
+    [`timers/${id}/title`]: title,
+    [`timers/${id}/project`]: project
+  };
+  return firebase.database().ref().update(updates);
 };
 
-export const updateTimer = (data) => {
-  return fetch('http://localhost:9000/api/timers', {
-    method: 'put',
-    body: JSON.stringify(data),
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-  }).then(checkStatus)
-    .catch((error) => console.log(error));
+export const startTimer = (attr) => {
+  const { id, start } = attr;
+  const updates = { [`timers/${id}/runningSince`]: start };
+
+  return firebase.database().ref().update(updates);
 };
 
-export const deleteTimer = (data) => {
-  return fetch('http://localhost:9000/api/timers', {
-    method: 'delete',
-    body: JSON.stringify(data),
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-  }).then(checkStatus)
-    .catch((error) => console.log(error));
+export const stopTimer = (attr) => {
+  const { id, elapsed } = attr;
+  const updates = {
+    [`timers/${id}/runningSince`]: null,
+    [`timers/${id}/elapsed`]: elapsed
+  };
+
+  return firebase.database().ref().update(updates);
 };
 
-export const startTimer = (data) => {
-  return fetch('http://localhost:9000/api/timers/start', {
-    method: 'post',
-    body: JSON.stringify(data),
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-  }).then(checkStatus)
-    .catch((error) => console.log(error));
-};
-
-export const stopTimer = (data) => {
-  return fetch('http://localhost:9000/api/timers/stop', {
-    method: 'post',
-    body: JSON.stringify(data),
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-  }).then(checkStatus)
-    .catch((error) => console.log(error));
+export const deleteTimer = (uid) => {
+  return firebase.database().ref(`timers/${uid}`).remove();
 };
