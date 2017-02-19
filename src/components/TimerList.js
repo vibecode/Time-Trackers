@@ -22,8 +22,8 @@ class TimerList extends Component {
 
     return (
         <CardGroup itemsPerRow={3} stackable>
-          {timers}
           <AddTimerForm onFormSubmit={this.props.onAddTimerFormClick} />
+          {timers}
         </CardGroup>
     );
   }

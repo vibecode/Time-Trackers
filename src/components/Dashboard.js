@@ -27,6 +27,7 @@ class Dashboard extends Component {
   loadTimersFromServer() {
     client.getTimers((data) => {
       const timers = _.map(data, item => item);
+      timers.sort((a, b) => b.created - a.created);
       this.setState({ timers });
     });
   }
@@ -36,11 +37,14 @@ class Dashboard extends Component {
   }
 
   createTimer(attrs = {}) {
+    const now = Date.now();
+
     const timer = {
       title: attrs.title || 'Title',
       project: attrs.project || 'Project',
       id: uuid.v4(),
       elapsed: 0,
+      created: now
     };
 
     this.setState({
