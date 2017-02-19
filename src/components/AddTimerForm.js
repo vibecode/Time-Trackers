@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TimerForm from './TimerForm';
 import { Button, Card } from 'semantic-ui-react';
+import IconTimer from './IconTimer';
 
 class AddTimerForm extends Component {
   constructor(props) {
@@ -45,6 +46,7 @@ class AddTimerForm extends Component {
       return (
           <Card raised className='add-timer-card'>
             <Button className='add-timer-button' icon='plus' color='violet' onClick={this.handleFormOpen} />
+            <IconTimer />
             <h1 className="add-timer-title center aligned">Add new timer</h1>
           </Card>
       );

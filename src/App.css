@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin');
+
 .add-timer-title {
   color: #6435C9;
   font-size: 18px;
@@ -8,12 +10,8 @@
   min-height: 42px !important;
 }
 
-.card {
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  min-height: 220px !important;
-}
-
-.statistic {
-  max-width: 100% !important;
+.icon-timer {
+  display: block;
+  margin-top: 30px;
+  align-self: center;
 }

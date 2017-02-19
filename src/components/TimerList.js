@@ -4,6 +4,14 @@ import AddTimerForm from './AddTimerForm';
 import { CardGroup } from 'semantic-ui-react';
 
 class TimerList extends Component {
+  componentDidMount() {
+    this.forceUpdateInterval = setInterval(() => this.forceUpdate(), 50);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.forceUpdateInterval);
+  }
+
   render() {
     const timers = this.props.timers.map((timer) => (
         <Timer

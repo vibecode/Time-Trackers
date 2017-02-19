@@ -19,14 +19,6 @@ class TimerScreen extends Component {
     this.handleStopClick = this.handleStopClick.bind(this);
   }
 
-  componentDidMount() {
-    this.forceUpdateInterval = setInterval(() => this.forceUpdate(), 50);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.forceUpdateInterval);
-  }
-
   handleTrashClick() {
     this.props.onTrashClick(this.props.id);
   }
