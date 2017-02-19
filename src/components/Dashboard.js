@@ -9,15 +9,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      timers: [
-        {
-          title: 'Task Title',
-          project: 'Project name',
-          id: uuid.v4(),
-          elapsed: 0,
-          runningSince: null
-        }
-      ]
+      timers: []
     };
 
     this.handleCreateFormSubmit = this.handleCreateFormSubmit.bind(this);

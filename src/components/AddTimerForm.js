@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TimerForm from './TimerForm';
-import { Button, Card, CardContent, CardHeader } from 'semantic-ui-react';
+import { Button, Card } from 'semantic-ui-react';
 
 class AddTimerForm extends Component {
   constructor(props) {

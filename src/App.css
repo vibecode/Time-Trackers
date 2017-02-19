@@ -9,6 +9,11 @@
 }
 
 .card {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
   min-height: 220px !important;
 }
 
+.statistic {
+  max-width: 100% !important;
+}
