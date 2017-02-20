@@ -21,8 +21,8 @@ export const updateTimer = (attr) => {
 };
 
 export const startTimer = (attr) => {
-  const { id, start } = attr;
-  const updates = { [`timers/${id}/runningSince`]: start };
+  const { id, runningSince } = attr;
+  const updates = { [`timers/${id}/runningSince`]: runningSince };
 
   return firebase.database().ref().update(updates);
 };

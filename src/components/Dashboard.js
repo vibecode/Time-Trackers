@@ -106,7 +106,7 @@ class Dashboard extends Component {
       }),
     });
 
-    client.startTimer({ id, start: now });
+    client.startTimer({ id, runningSince: now });
   }
 
   stopTimer(timerId) {
